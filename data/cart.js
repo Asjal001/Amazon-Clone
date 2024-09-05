@@ -1,1 +1,1 @@
-let cart=[{}];
+let cart=[];
