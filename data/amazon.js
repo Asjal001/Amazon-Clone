@@ -1,3 +1,4 @@
+//generating HTML with JS
 let HTML='';
 products.forEach((products)=>{
   HTML+=`
@@ -50,6 +51,8 @@ products.forEach((products)=>{
 });
 document.querySelector('.js-products-grid').innerHTML=HTML;
 
+//add to cart button funtionality
+const timeouts = {};
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
   button.addEventListener('click',()=>{
     const productId=button.dataset.productId;
@@ -71,13 +74,22 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
         quantity: dropdownQuantity
       });
     } 
-    console.log(cart);
     let totalQuantity=0;
     cart.forEach((item)=>{
       totalQuantity+=item.quantity;
     });
+    //cart quantity funtionality
     document.querySelector('.cart-quantity').innerHTML=totalQuantity;
-    document.querySelector(`.js-added-${productId}`).classList.add('js-added');
-    let timeout = setTimeout(()=>{document.querySelector(`.js-added-${productId}`).classList.remove('js-added')},2000);
+    //Added text dissapearing after 2 sec functionality
+    const addedElement = document.querySelector(`.js-added-${productId}`);
+    addedElement.classList.add('js-added');
+    // Clear any existing timeout for this product
+    if (timeouts[productId]) {
+      clearTimeout(timeouts[productId]);
+    }
+    // Set a new timeout and store its ID
+    timeouts[productId] = setTimeout(() => {
+      addedElement.classList.remove('js-added');
+    }, 2000);
   });
 });
