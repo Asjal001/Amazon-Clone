@@ -1,6 +1,7 @@
-import { cart, addToCart } from '../data/cart.js';
+import { cart, calculateCartQuantity, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from "../utilis/money.js";
+updateCartQuantity();
 //generating HTML with JS
 let HTML='';
 products.forEach((products)=>{
@@ -55,11 +56,7 @@ products.forEach((products)=>{
 //cart quantity funtionality
 function updateCartQuantity()
 {
-  let totalQuantity=0;
-  cart.forEach((cartItem)=>{
-    totalQuantity+=cartItem.quantity;
-  });
-  document.querySelector('.cart-quantity').innerHTML=totalQuantity;
+  document.querySelector('.cart-quantity').innerHTML=calculateCartQuantity();
 }
 document.querySelector('.js-products-grid').innerHTML=HTML;
 //add to cart button funtionality
