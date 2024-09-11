@@ -107,6 +107,7 @@ export function renderOrderSummary()
       const container=document.querySelector(`.js-cart-item-container-${productId}`);
       container.remove();
       updateCartQuantity();
+      renderPaymentSummary();
     });
   }); 
   //update button functionality
@@ -156,6 +157,7 @@ export function renderOrderSummary()
       updateCartQuantity();
     } 
     container.classList.remove('is-editing-quantity');
+    renderPaymentSummary();
   }
   document.querySelectorAll('.js-delivery-option').forEach((element)=>
   {
