@@ -1,14 +1,12 @@
 import { cart,updateDeliveryOption, saveToLocal, calculateCartQuantity, removeFromCart } from "../../data/cart.js";
 import { getProduct, products } from "../../data/products.js";
 import { formatCurrency } from "../../utilis/money.js";
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { getDeliveryOption,deliveryOptions } from "../../data/deliveryOptions.js";
+import { calculateDeliveryDate, getDeliveryOption,deliveryOptions } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./payment-summary.js";
 
 
 export function renderOrderSummary()
 {
-  
   updateCartQuantity();
   function updateCartQuantity()
   {
@@ -21,9 +19,7 @@ export function renderOrderSummary()
     const matchingProduct=getProduct(productId);
     const deliveryOptionId=cartItem.deliveryOptionId;
     const deliveryOption=getDeliveryOption(deliveryOptionId);
-    const today=dayjs();
-    const deliveryDate=today.add(deliveryOption.deliveryDays,'days');
-    const dateString=deliveryDate.format('dddd, MMMM D');
+    const dateString=calculateDeliveryDate(deliveryOption);
     cartHTML+=`
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
@@ -71,9 +67,7 @@ export function renderOrderSummary()
     let DeliveryHtml='';
     deliveryOptions.forEach((deliveryOption)=>
     {
-      const today=dayjs();
-      const deliveryDate=today.add(deliveryOption.deliveryDays,'days');
-      const dateString=deliveryDate.format('dddd, MMMM D');
+      const dateString=calculateDeliveryDate(deliveryOption);
       const priceString=deliveryOption.priceCents===0
       ?'Free'
       :`$${formatCurrency(deliveryOption.priceCents)} -`;
@@ -104,9 +98,10 @@ export function renderOrderSummary()
     {
       const productId=link.dataset.productId;
       removeFromCart(productId);
-      const container=document.querySelector(`.js-cart-item-container-${productId}`);
-      container.remove();
-      updateCartQuantity();
+      // const container=document.querySelector(`.js-cart-item-container-${productId}`);
+      // container.remove();
+      // updateCartQuantity();
+      renderOrderSummary();
       renderPaymentSummary();
     });
   }); 
