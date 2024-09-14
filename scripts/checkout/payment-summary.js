@@ -1,4 +1,4 @@
-import { calculateCartQuantity, cart } from "../../data/cart.js";
+import { cart } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../../utilis/money.js";
@@ -6,7 +6,7 @@ export function renderPaymentSummary()
 {
   let productCost=0;
   let deliveryCost=0;
-  cart.forEach((cartItem) => {
+  cart.cartItem.forEach((cartItem) => {
     const product=getProduct(cartItem.productId);
     productCost+=cartItem.quantity*(product.priceCents);
     const deliveryOption=getDeliveryOption(cartItem.deliveryOptionId);
@@ -15,13 +15,13 @@ export function renderPaymentSummary()
   const totalCostWithoutTax=productCost+deliveryCost;
   const tax=totalCostWithoutTax*0.1;
   const totalCost=totalCostWithoutTax+tax;
-  const PaymentHtnl=`
+  const PaymentHtml=`
     <div class="payment-summary-title">
       Order Summary
     </div>
 
     <div class="payment-summary-row">
-      <div>Items (${calculateCartQuantity()}):</div>
+      <div>Items (${cart.calculateCartQuantity()}):</div>
       <div class="payment-summary-money">$${formatCurrency(productCost)}</div>
     </div>
 
@@ -50,5 +50,5 @@ export function renderPaymentSummary()
     </button>
     <script type="module" src="scripts/checkout.js"></script>
   `;
-  document.querySelector('.payment-summary').innerHTML=PaymentHtnl;
+  document.querySelector('.payment-summary').innerHTML=PaymentHtml;
 }

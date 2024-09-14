@@ -1,6 +1,5 @@
-import { cart, calculateCartQuantity, addToCart } from '../data/cart.js';
+import { cart } from '../data/cart.js';
 import { products } from '../data/products.js';
-import { formatCurrency } from "../utilis/money.js";
 updateCartQuantity();
 //generating HTML with JS
 let HTML='';
@@ -56,7 +55,7 @@ products.forEach((products)=>{
 //cart quantity funtionality
 function updateCartQuantity()
 {
-  document.querySelector('.cart-quantity').innerHTML=calculateCartQuantity();
+  document.querySelector('.cart-quantity').innerHTML=cart.calculateCartQuantity();
 }
 document.querySelector('.js-products-grid').innerHTML=HTML;
 //add to cart button funtionality
@@ -64,7 +63,7 @@ const timeouts = {};
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
   button.addEventListener('click',()=>{
     const productId=button.dataset.productId;
-    addToCart(productId);
+    cart.addToCart(productId);
     updateCartQuantity();
     //Added text dissapearing after 2 sec functionality
     const addedElement = document.querySelector(`.js-added-${productId}`);
