@@ -5,9 +5,9 @@ class Cart
   constructor(localStorageId)
   {
     this.#localStorageId=localStorageId;
-    this.#loadFromStorage();
+    this.loadFromStorage();
   }
-  #loadFromStorage() 
+  loadFromStorage() 
   {
     this.cartItem=JSON.parse(localStorage.getItem(this.#localStorageId))||[
       {
