@@ -102,14 +102,13 @@ export function loadProducts(fun)
       {
         return new Clothing(productDetails);
       }
-      else if(productDetails.type==='appliance')
-      {
-        return new Appliance(productDetails);
-      }
+      // else if(productDetails.type==='appliance')
+      // {
+      //   return new Appliance(productDetails);
+      // }
       else
       return new Product(productDetails);
     });
-    console.log('Load Products');
     fun();
   });
   xhr.open('GET', 'https://supersimplebackend.dev/products');
