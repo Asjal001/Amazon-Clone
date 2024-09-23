@@ -4,6 +4,7 @@ import { formatCurrency } from "../utilis/money.js";
 import { getProduct,loadProductsFetch } from "../data/products.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
+
 updateCartQuantity();
 
 console.log(orders);
@@ -43,7 +44,8 @@ async function displayOrder(order)
         </div>
         <button class="buy-again-button button-primary">
           <img class="buy-again-icon" src="images/icons/buy-again.png">
-          <span class="buy-again-message">Buy it again</span>
+          <span class="buy-again-message js-buy-again"
+          data-product-id="${product.productId}" data-quantity="${product.quantity}" >Buy it again</span>
         </button>
       </div>
 
@@ -93,5 +95,15 @@ async function renderOrders() {
   }
 
   document.querySelector('.orders-grid').innerHTML=HTML;
+
+  document.querySelectorAll('.js-buy-again').forEach((link)=>{
+    link.addEventListener('click',()=>
+    {
+      const productId=link.dataset.productId;
+      const productQuantity=link.dataset.quantity;
+      cart.addToCart(productId,productQuantity);
+      updateCartQuantity();
+    });
+  }); 
 }
 renderOrders();

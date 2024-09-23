@@ -3,6 +3,7 @@ import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../../utilis/money.js";
 import { addOrder } from "../../data/order.js";
+import { renderOrderSummary } from "./order-summary.js";
 export function renderPaymentSummary() 
 {
   let productCost=0;
@@ -71,7 +72,9 @@ export function renderPaymentSummary()
     {
       console.log('Error placing order. Please try again later.');
     }  
-
+    cart.emptyCart();
+    renderOrderSummary();
+    renderPaymentSummary();
     window.location.href = 'orders.html';
   });
 }
