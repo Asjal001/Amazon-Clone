@@ -50,9 +50,7 @@ async function displayOrder(order)
       </div>
 
       <div class="product-actions">
-        <a href="tracking.html?
-        orderId=123&
-        productId=456">
+        <a href="tracking.html?orderId=${order.id}&productId=${product.productId}">
           <button class="track-package-button button-secondary">
             Track package
           </button>
