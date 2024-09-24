@@ -12,11 +12,18 @@ function renderProductsGrid()
 
   let filteredProducts = products;
 
-  // If a search exists in the URL parameters,
   // filter the products that match the search.
   if (search) {
     filteredProducts = products.filter((product) => {
-      return product.name.includes(search);
+      let matchingKeyword = false;
+
+      product.keywords.forEach((keyword) => {
+        if (keyword.toLowerCase().includes(search.toLowerCase())) {
+          matchingKeyword = true;
+        }
+      });
+
+      return matchingKeyword || product.name.includes(search);
     });
   }
 
