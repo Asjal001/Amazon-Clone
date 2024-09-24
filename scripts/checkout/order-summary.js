@@ -2,15 +2,15 @@ import { cart } from "../../data/cart.js";
 import { getProduct  } from "../../data/products.js";
 import { formatCurrency } from "../../utilis/money.js";
 import { calculateDeliveryDate, getDeliveryOption,deliveryOptions } from "../../data/deliveryOptions.js";
-import { renderPaymentSummary } from "./payment-summary.js";
+import { renderPaymentSummary , placeOrder } from "./payment-summary.js";
 
+function updateCartQuantity()
+{
+  document.querySelector('.return-to-home-link').innerHTML= `Items: ${cart.calculateCartQuantity()}`;
+}
 export function renderOrderSummary()
 {
   updateCartQuantity();
-  function updateCartQuantity()
-  {
-    document.querySelector('.return-to-home-link').innerHTML= `Items: ${cart.calculateCartQuantity()}`;
-  }
   //generating html for checkout page
   let cartHTML='';
   cart.cartItem.forEach((cartItem)=>{
@@ -58,6 +58,7 @@ export function renderOrderSummary()
           ${deliveryOptionsHtml(cartItem)}
         </div>
       </div>
+      <button class="place-order-button button-primary js-place-order-2">Place your order</button>
     </div>
     `;
   });
@@ -92,6 +93,7 @@ export function renderOrderSummary()
     return DeliveryHtml;
   }
   document.querySelector('.order-summary').innerHTML=cartHTML;
+  document.querySelector('.js-place-order-2').addEventListener('click',async ()=>{placeOrder();});
   //delete button functionality
   document.querySelectorAll('.js-delete').forEach((link)=>{
     link.addEventListener('click',()=>

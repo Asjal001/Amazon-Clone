@@ -53,28 +53,29 @@ export function renderPaymentSummary()
     <script type="module" src="scripts/checkout.js"></script>
   `;
   document.querySelector('.payment-summary').innerHTML=PaymentHtml;
-  document.querySelector('.js-place-order').addEventListener('click',async ()=>{
-    try
-    {
-      const response=await fetch('https://supersimplebackend.dev/orders',{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          cart: cart.cartItem
-        })
-      });
-      const order=await response.json();
-      addOrder(order);
-    }
-    catch(error)
-    {
-      console.log('Error placing order. Please try again later.');
-    }  
-    cart.emptyCart();
-    renderOrderSummary();
-    renderPaymentSummary();
-    window.location.href = 'orders.html';
-  });
+  document.querySelector('.js-place-order').addEventListener('click',async ()=>{placeOrder();});
+  
+}
+export async function placeOrder()
+{
+  try
+  {
+    const response=await fetch('https://supersimplebackend.dev/orders',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cart: cart.cartItem
+      })
+    });
+    const order=await response.json();
+    addOrder(order);
+  }
+  catch(error)
+  {
+    console.log('Error placing order. Please try again later.');
+  }  
+  cart.emptyCart();
+  window.location.href = 'orders.html';
 }
